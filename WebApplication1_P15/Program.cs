@@ -1,4 +1,8 @@
 using ASP_P15.Services.Hash;
+using ASP_P15.Services.Kdf;
+using ASP_P15.Services.KdfService;
+using ASP_P15.Services.OTP;
+using ASP_P15.Services.FileName;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,9 +11,10 @@ builder.Services.AddControllersWithViews();
 
 
 //builder.Services.AddSingleton<IHashService, Md5HashService>();
-builder.Services.AddSingleton<IHashService, ShaHashService>();
-
-
+builder.Services.AddScoped<IHashService, ShaHashService>();
+builder.Services.AddSingleton<IKdfService, Pbkdf1Service>();
+builder.Services.AddSingleton<IOtpService, Otp6Service>();
+builder.Services.AddTransient<IFileNameService, IFileNameService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
